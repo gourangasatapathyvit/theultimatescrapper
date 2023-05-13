@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Grid, GridItem, Show } from "@chakra-ui/react";
+import "./App.css";
+import SearchBar from "./components/mainPage/SearchBar";
+import Footer from "./components/footer/Footer";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Grid
+        templateAreas={{
+          base: `"nav" "main" "footer"`,
+          // lg: `"nav nav" "main main" "footer footer"`,
+        }}
+        // templateColumns={{
+        //   base: "1fr",
+        //   lg: "1fr 1fr",
+        // }}
+
+        // gridTemplateRows={"50px 1fr 30px"}
+        // gridTemplateColumns={"150px 1fr"}
+        // gap="1"
+        color="blackAlpha.700"
+        fontWeight="bold"
+        height={"100vh"}
+      >
+        <Show above="lg"></Show>
+
+        <Show below="lg"></Show>
+
+        {/* <GridItem bg="yellow.400" area={"nav"}>
+          nav
+        </GridItem> */}
+
+        <GridItem
+          bg="whiteAlpha.400"
+          area={"main"}
+          width={"100%"}
+          height={"100%"}
+          display="flex"
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <SearchBar></SearchBar>
+        </GridItem>
+
+        <GridItem area={"footer"} className="relative">
+          <Footer />
+        </GridItem>
+      </Grid>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
