@@ -1,59 +1,45 @@
-import { Grid, GridItem, Show } from "@chakra-ui/react";
+import { useState } from "react";
 import "./App.css";
-import SearchBar from "./components/mainPage/SearchBar";
-import Footer from "./components/footer/Footer";
+import {
+  BrowserRouter as Router,
+  Routes, // Switch= Routes
+  Route,
+  Link,
+  Navigate, // Redirect=Navigate
+} from "react-router-dom";
+
+import MainPage from "./components/mainPage/MainPage";
+import ResPage from "./components/resultPage/ResPage";
 
 function App() {
+  const [inputValue, setInputValue] = useState("lorem");
+
   return (
     <>
-      <Grid
-        templateAreas={{
-          base: `"nav" "main" "footer"`,
-          // lg: `"nav nav" "main main" "footer footer"`,
-        }}
-        templateColumns={{
-          base: "1fr",
-          // lg: "1fr 1fr",
-        }}
-        gridTemplateRows={"auto 1fr auto"}
-        // gridTemplateColumns={"150px 1fr"}
-        // gap="1"
-        color="blackAlpha.700"
-        fontWeight="bold"
-        minH="100vh"
-      >
-        <Show above="lg"></Show>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <MainPage
+                catagory={["Movies", "Series", "Books", "Songs"]}
+                sources={["1337x", "YTS"]}
+              />
+            }
+          />
 
-        <Show below="lg"></Show>
+          {/* <Route path="/result" element={<ResPage inputValue={inputValue} />} /> */}
 
-        <GridItem
-          // bg="yellow.400"
-          area={"nav"}
-          // height={"0"}
-          textAlign={"center"}
-          fontSize={50}
-          textColor={"black"}
-          fontFamily={"fantasy"}
-        >
-          <h3>The Ultimate Scrapper</h3>
-        </GridItem>
+          <Route
+            path="/result"
+            element={<ResPage source={"saas"} catagory={""} />}
+          />
 
-        <GridItem
-          bg="whiteAlpha.400"
-          area={"main"}
-          width={"100%"}
-          height={"100%"}
-          display="flex"
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
-          <SearchBar></SearchBar>
-        </GridItem>
+          {/* <Navigate to="/" /> */}
+        </Routes>
+      </Router>
 
-        <GridItem bg="yellow.400" area={"footer"}>
-          <Footer />
-        </GridItem>
-      </Grid>
+      {/* <MainPage></MainPage> */}
     </>
   );
 }
