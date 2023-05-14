@@ -15,21 +15,21 @@ function App() {
           base: "1fr",
           // lg: "1fr 1fr",
         }}
-        // gridTemplateRows={"50px 1fr 30px"}
+        gridTemplateRows={"auto 1fr auto"}
         // gridTemplateColumns={"150px 1fr"}
         // gap="1"
         color="blackAlpha.700"
         fontWeight="bold"
-        height={"100vh"}
+        minH="100vh"
       >
         <Show above="lg"></Show>
 
         <Show below="lg"></Show>
 
         <GridItem
-          bg="yellow.400"
+          // bg="yellow.400"
           area={"nav"}
-          height={"0"}
+          // height={"0"}
           textAlign={"center"}
           fontSize={50}
           textColor={"black"}
@@ -46,12 +46,11 @@ function App() {
           display="flex"
           justifyContent={"center"}
           alignItems={"center"}
-          padding={"4"}
         >
           <SearchBar></SearchBar>
         </GridItem>
 
-        <GridItem area={"footer"} className="relative">
+        <GridItem bg="yellow.400" area={"footer"}>
           <Footer />
         </GridItem>
       </Grid>

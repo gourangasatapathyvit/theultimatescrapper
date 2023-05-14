@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Image,
-  Input,
-  InputGroup,
-  InputRightElement,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { useBreakpointValue } from "@chakra-ui/react";
 import mainBg from "../../assets/webscrape.jpg";
 
 const SearchBar = () => {
