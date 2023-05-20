@@ -7,21 +7,23 @@ import { useState } from "react";
 interface mainPageProps {
   sources: string[];
   catagory: string[];
+  getQueryParams: (mainPageObjProps: mainPageObjProps) => void;
 }
 
 interface mainPageObjProps {
-  source: string | null;
+  source: string[] | null;
   catagory: string | null;
   inputQuery: string | null;
 }
 
-const MainPage = ({ sources, catagory }: mainPageProps) => {
+const MainPage = ({ sources, catagory, getQueryParams }: mainPageProps) => {
   const [mainPageObj, setMainPageObj] = useState<mainPageObjProps>({
-    source: "",
+    source: [],
     catagory: "",
     inputQuery: "",
   });
 
+  // this is regarding readonly function
   const [checkedStateSource, setCheckedStateSource] = useState<{
     [key: string]: boolean;
   }>({});
@@ -39,15 +41,23 @@ const MainPage = ({ sources, catagory }: mainPageProps) => {
       [name]: checked,
     });
 
-    checked
-      ? setMainPageObj((prevState) => ({
-          ...prevState,
-          source: name,
-        }))
-      : setMainPageObj((prevState) => ({
-          ...prevState,
-          source: null,
-        }));
+    let res: string[] = [];
+
+    if (!checked) {
+      console.log(1212);
+
+      res =
+        mainPageObj.source?.filter(
+          (item) => item !== mainPageObj.source?.find((item) => item === name)
+        ) ?? [];
+    } else {
+      res = [...(mainPageObj.source ?? []), name];
+    }
+
+    setMainPageObj((prevState) => ({
+      ...prevState,
+      source: res,
+    }));
   };
   const handleChangeCatagory = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
@@ -129,6 +139,8 @@ const MainPage = ({ sources, catagory }: mainPageProps) => {
                   ...prevState,
                   inputQuery: inputQuery.isClicked ? inputQuery.input : "",
                 }));
+
+                getQueryParams(mainPageObj);
               }}
             />
 

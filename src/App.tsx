@@ -1,10 +1,8 @@
-import { useState } from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
   Routes, // Switch= Routes
   Route,
-  Link,
   Navigate, // Redirect=Navigate
 } from "react-router-dom";
 
@@ -12,8 +10,6 @@ import MainPage from "./components/mainPage/MainPage";
 import ResPage from "./components/resultPage/ResPage";
 
 function App() {
-  const [inputValue, setInputValue] = useState("lorem");
-
   return (
     <>
       <Router>
@@ -24,6 +20,9 @@ function App() {
               <MainPage
                 catagory={["Movies", "Series", "Books", "Songs"]}
                 sources={["1337x", "YTS"]}
+                getQueryParams={(mainPageObjProps) =>
+                  console.log(mainPageObjProps)
+                }
               />
             }
           />

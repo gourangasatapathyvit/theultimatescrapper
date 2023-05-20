@@ -1,17 +1,6 @@
 import { useState } from "react";
-
-export interface getInputProps {
+interface getInputProps {
   getInput: (inputQuery: { input: string; isClicked: boolean }) => void;
-}
-
-interface mainPageProps {
-  inputValue: string;
-  sources: {
-    sourceType: string;
-  };
-  catagory: {
-    catagoryType: string;
-  };
 }
 
 const InputComp = ({ getInput }: getInputProps) => {
