@@ -10,9 +10,9 @@ interface mainPageProps {
 }
 
 interface mainPageObjProps {
-  source: string;
-  catagory: string;
-  inputQuery: string;
+  source: string | null;
+  catagory: string | null;
+  inputQuery: string | null;
 }
 
 const MainPage = ({ sources, catagory }: mainPageProps) => {
@@ -39,10 +39,15 @@ const MainPage = ({ sources, catagory }: mainPageProps) => {
       [name]: checked,
     });
 
-    setMainPageObj((prevState) => ({
-      ...prevState,
-      source: name,
-    }));
+    checked
+      ? setMainPageObj((prevState) => ({
+          ...prevState,
+          source: name,
+        }))
+      : setMainPageObj((prevState) => ({
+          ...prevState,
+          source: null,
+        }));
   };
   const handleChangeCatagory = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
@@ -53,10 +58,15 @@ const MainPage = ({ sources, catagory }: mainPageProps) => {
 
     checked ? setCheckedItem(name) : setCheckedItem("");
 
-    setMainPageObj((prevState) => ({
-      ...prevState,
-      catagory: name,
-    }));
+    checked
+      ? setMainPageObj((prevState) => ({
+          ...prevState,
+          catagory: name,
+        }))
+      : setMainPageObj((prevState) => ({
+          ...prevState,
+          catagory: null,
+        }));
   };
 
   return (
@@ -114,6 +124,7 @@ const MainPage = ({ sources, catagory }: mainPageProps) => {
             <InputComp
               getInput={(inputQuery) => {
                 console.log(inputQuery);
+
                 setMainPageObj((prevState) => ({
                   ...prevState,
                   inputQuery: inputQuery.isClicked ? inputQuery.input : "",
