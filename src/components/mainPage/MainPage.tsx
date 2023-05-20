@@ -10,7 +10,7 @@ interface mainPageProps {
   getQueryParams: (mainPageObjProps: mainPageObjProps) => void;
 }
 
-interface mainPageObjProps {
+export interface mainPageObjProps {
   source: string[] | null;
   catagory: string | null;
   inputQuery: string | null;

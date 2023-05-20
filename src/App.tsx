@@ -7,9 +7,12 @@ import {
 } from "react-router-dom";
 
 import MainPage from "./components/mainPage/MainPage";
+import { mainPageObjProps } from "./components/mainPage/MainPage";
 import ResPage from "./components/resultPage/ResPage";
+import { useState } from "react";
 
 function App() {
+  const [mainPageObjProps, setMainPageObjProps] = useState<mainPageObjProps>();
   return (
     <>
       <Router>
@@ -20,9 +23,9 @@ function App() {
               <MainPage
                 catagory={["Movies", "Series", "Books", "Songs"]}
                 sources={["1337x", "YTS"]}
-                getQueryParams={(mainPageObjProps) =>
-                  console.log(mainPageObjProps)
-                }
+                getQueryParams={(mainPageObjProps) => {
+                  setMainPageObjProps(mainPageObjProps);
+                }}
               />
             }
           />
