@@ -44,8 +44,6 @@ const MainPage = ({ sources, catagory, getQueryParams }: mainPageProps) => {
     let res: string[] = [];
 
     if (!checked) {
-      console.log(1212);
-
       res =
         mainPageObj.source?.filter(
           (item) => item !== mainPageObj.source?.find((item) => item === name)
