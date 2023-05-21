@@ -2,7 +2,7 @@ import { Grid, GridItem, Show } from "@chakra-ui/react";
 import mainBg from "../../assets/webscrape.jpg";
 import InputComp from "../utilityComponents/InputComp";
 import Footer from "../footer/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface mainPageProps {
   sources: string[];
@@ -77,6 +77,10 @@ const MainPage = ({ sources, catagory, getQueryParams }: mainPageProps) => {
         }));
   };
 
+  useEffect(() => {
+    getQueryParams(mainPageObj);
+  }, [getQueryParams, mainPageObj]);
+
   return (
     <>
       <Grid
@@ -138,7 +142,7 @@ const MainPage = ({ sources, catagory, getQueryParams }: mainPageProps) => {
                   inputQuery: inputQuery.isClicked ? inputQuery.input : "",
                 }));
 
-                getQueryParams(mainPageObj);
+                // getQueryParams(mainPageObj);
               }}
             />
 

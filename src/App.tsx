@@ -25,6 +25,7 @@ function App() {
                 sources={["1337x", "YTS"]}
                 getQueryParams={(mainPageObjProps) => {
                   setMainPageObjProps(mainPageObjProps);
+                  console.log(mainPageObjProps);
                 }}
               />
             }
@@ -34,10 +35,13 @@ function App() {
 
           <Route
             path="/result"
-            element={<ResPage source={"saas"} catagory={""} />}
+            element={
+              <ResPage
+                source={"saas"}
+                catagory={mainPageObjProps?.inputQuery}
+              />
+            }
           />
-
-          {/* <Navigate to="/" /> */}
         </Routes>
       </Router>
 

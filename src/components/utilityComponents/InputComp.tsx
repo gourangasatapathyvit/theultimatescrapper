@@ -1,11 +1,14 @@
 import { useState } from "react";
-interface getInputProps {
+import { useNavigate } from "react-router-dom";
+
+export interface getInputProps {
   getInput: (inputQuery: { input: string; isClicked: boolean }) => void;
 }
 
 const InputComp = ({ getInput }: getInputProps) => {
   const [input, setInput] = useState("");
   const [isClicked, setIsClicked] = useState(false);
+  // const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -18,6 +21,8 @@ const InputComp = ({ getInput }: getInputProps) => {
       ? handleEmpty()
       : getInput({ input, isClicked: true });
     setIsClicked(true);
+
+    // navigate("/result");
   };
   const handleEmpty = () => {
     alert("enter proper input");
