@@ -1,14 +1,17 @@
-import { mainPageObjProps } from "../mainPage/MainPage";
+import { useLocation } from "react-router-dom";
+
 interface resPageObjProps {
   source: string;
-  catagory: string;
 }
-const ResPage = ({ source, catagory }: resPageObjProps) => {
+const ResPage = ({ source }: resPageObjProps) => {
+  const location = useLocation();
+  const inputValue = new URLSearchParams(location.search).get("input");
+
   return (
     <div>
       <p>
-        {/* {source} */}
-        {catagory}
+        {source}
+        {inputValue}
       </p>
     </div>
   );

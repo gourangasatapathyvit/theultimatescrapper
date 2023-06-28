@@ -9,10 +9,14 @@ import {
 import MainPage from "./components/mainPage/MainPage";
 import { mainPageObjProps } from "./components/mainPage/MainPage";
 import ResPage from "./components/resultPage/ResPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [mainPageObjProps, setMainPageObjProps] = useState<mainPageObjProps>();
+
+  useEffect(() => {
+    setMainPageObjProps(mainPageObjProps);
+  }, [mainPageObjProps]);
   return (
     <>
       <Router>
@@ -23,29 +27,13 @@ function App() {
               <MainPage
                 catagory={["Movies", "Series", "Books", "Songs"]}
                 sources={["1337x", "YTS"]}
-                getQueryParams={(mainPageObjProps) => {
-                  setMainPageObjProps(mainPageObjProps);
-                  console.log(mainPageObjProps);
-                }}
               />
             }
           />
 
-          {/* <Route path="/result" element={<ResPage inputValue={inputValue} />} /> */}
-
-          <Route
-            path="/result"
-            element={
-              <ResPage
-                source={"saas"}
-                catagory={mainPageObjProps?.inputQuery}
-              />
-            }
-          />
+          <Route path="/result" element={<ResPage source={"saas"} />} />
         </Routes>
       </Router>
-
-      {/* <MainPage></MainPage> */}
     </>
   );
 }

@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { mainPageObjProps } from "../mainPage/MainPage";
 
 export interface getInputProps {
-  getInput: (inputQuery: { input: string; isClicked: boolean }) => void;
+  // getInput: (inputQuery: { input: string; isClicked: boolean }) => void;
+  mainPageObj: mainPageObjProps;
 }
 
-const InputComp = ({ getInput }: getInputProps) => {
+const InputComp = ({ mainPageObj }: getInputProps) => {
   const [input, setInput] = useState("");
   const [isClicked, setIsClicked] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -17,16 +19,13 @@ const InputComp = ({ getInput }: getInputProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    input.trim() == "" || input == null || input == undefined
-      ? handleEmpty()
-      : getInput({ input, isClicked: true });
-    setIsClicked(true);
-
-    // navigate("/result");
-  };
-  const handleEmpty = () => {
-    alert("enter proper input");
-    getInput({ input: "", isClicked: isClicked });
+    navigate(
+      `/result?input=${encodeURIComponent(input)}?catagory=${encodeURIComponent(
+        mainPageObj.catagory ? mainPageObj.catagory : ""
+      )}?sources=${encodeURIComponent(
+        mainPageObj.source ? mainPageObj.source.toString() : ""
+      )}`
+    );
   };
 
   return (

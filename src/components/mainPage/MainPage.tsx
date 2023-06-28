@@ -2,12 +2,11 @@ import { Grid, GridItem, Show } from "@chakra-ui/react";
 import mainBg from "../../assets/webscrape.jpg";
 import InputComp from "../utilityComponents/InputComp";
 import Footer from "../footer/Footer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface mainPageProps {
   sources: string[];
   catagory: string[];
-  getQueryParams: (mainPageObjProps: mainPageObjProps) => void;
 }
 
 export interface mainPageObjProps {
@@ -16,7 +15,7 @@ export interface mainPageObjProps {
   inputQuery: string | null;
 }
 
-const MainPage = ({ sources, catagory, getQueryParams }: mainPageProps) => {
+const MainPage = ({ sources, catagory }: mainPageProps) => {
   const [mainPageObj, setMainPageObj] = useState<mainPageObjProps>({
     source: [],
     catagory: "",
@@ -59,6 +58,7 @@ const MainPage = ({ sources, catagory, getQueryParams }: mainPageProps) => {
   };
   const handleChangeCatagory = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
+
     setcheckedStateCatagory({
       ...checkedStateCatagory,
       [name]: checked,
@@ -76,10 +76,6 @@ const MainPage = ({ sources, catagory, getQueryParams }: mainPageProps) => {
           catagory: null,
         }));
   };
-
-  useEffect(() => {
-    getQueryParams(mainPageObj);
-  }, [getQueryParams, mainPageObj]);
 
   return (
     <>
@@ -125,26 +121,13 @@ const MainPage = ({ sources, catagory, getQueryParams }: mainPageProps) => {
           alignItems={"center"}
         >
           <div className="bg-input-grey border-red-500 rounded-lg">
-            {/* <img className="object-cover w-full h-80" src={mainBg}></img> */}
-
             <img
               className="object-cover w-full h-40 sm:h-80  sm:w-auto"
               src={mainBg}
               alt="Main Background Image"
             />
 
-            <InputComp
-              getInput={(inputQuery) => {
-                console.log(inputQuery);
-
-                setMainPageObj((prevState) => ({
-                  ...prevState,
-                  inputQuery: inputQuery.isClicked ? inputQuery.input : "",
-                }));
-
-                // getQueryParams(mainPageObj);
-              }}
-            />
+            <InputComp mainPageObj={mainPageObj} />
 
             <div className="p-4">
               <h2 className="underline uppercase">Sources</h2>
