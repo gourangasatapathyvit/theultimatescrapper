@@ -1,11 +1,12 @@
 interface torrentResult {
-  magnet: string;
-  name: string;
-  size: string;
-  seeders: string;
-  leechers: string;
-  uploaded_at: string;
-  uploader: string;
+  magnet: string|null;
+  name: string|null;
+  size: string|null;
+  seeders: string|null;
+  leechers: string|null;
+  uploaded_at: string|null;
+  uploader: string|null;
+  category:string|null;
 }
 interface aggObject {
   torrent: torrentResult;
@@ -27,10 +28,11 @@ export default function Torrent({ torrent }: aggObject) {
         </span>
         <span className="uploaded_at">{torrent.uploaded_at}</span>
         <span className="uploaded_by">{torrent.uploader}</span>
+        <span className="category">{torrent.category}</span>
       </div>
       <div className="actions">
         <a href={torrent.magnet}>Download</a>
-        {torrent.magnet.startsWith("magnet:?xt=urn:btih:") && (
+        {torrent.magnet && torrent.magnet.startsWith("magnet:?xt=urn:btih:") && (
           <a
             href={
               "https://webtor.io/show?magnet=" +

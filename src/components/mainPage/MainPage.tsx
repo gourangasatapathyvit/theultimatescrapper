@@ -2,11 +2,12 @@ import { Grid, GridItem, Show } from "@chakra-ui/react";
 import mainBg from "../../assets/webscrape.jpg";
 import InputComp from "../utilityComponents/InputComp";
 import Footer from "../footer/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface mainPageProps {
   sources: string[];
   catagory: string[];
+  getAllData:(data: mainPageObjProps) => void;
 }
 
 export interface mainPageObjProps {
@@ -15,12 +16,17 @@ export interface mainPageObjProps {
   inputQuery: string | null;
 }
 
-const MainPage = ({ sources, catagory }: mainPageProps) => {
+const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
   const [mainPageObj, setMainPageObj] = useState<mainPageObjProps>({
     source: [],
     catagory: "",
     inputQuery: "",
   });
+
+  useEffect(() => {
+    getAllData(mainPageObj);
+  }, [getAllData, mainPageObj]);
+
 
   // this is regarding readonly function
   const [checkedStateSource, setCheckedStateSource] = useState<{
@@ -66,15 +72,8 @@ const MainPage = ({ sources, catagory }: mainPageProps) => {
 
     checked ? setCheckedItem(name) : setCheckedItem("");
 
-    checked
-      ? setMainPageObj((prevState) => ({
-          ...prevState,
-          catagory: name,
-        }))
-      : setMainPageObj((prevState) => ({
-          ...prevState,
-          catagory: null,
-        }));
+    checked? setMainPageObj((prevState) => ({...prevState, catagory: name,}))
+            : setMainPageObj((prevState) => ({...prevState,catagory: null,}));
   };
 
   return (
@@ -127,7 +126,7 @@ const MainPage = ({ sources, catagory }: mainPageProps) => {
               alt="Main Background Image"
             />
 
-            <InputComp mainPageObj={mainPageObj} />
+            <InputComp mainPageObj={mainPageObj} updateAllData={setMainPageObj} />
 
             <div className="p-4">
               <h2 className="underline uppercase">Sources</h2>
