@@ -25,9 +25,8 @@ const ResPage = ({ testData }: resPageObjProps) => {
     useEffect(() => {
         if(testData.inputQuery){
             const apiUrl = 'http://localhost:8090/getAllRes';
-            const requestBody = testData.inputQuery;
         
-            callPostApiWithStringBody<any>(apiUrl, requestBody)
+            callPostApiWithStringBody<any>(apiUrl, testData)
               .then((response) => {
                 console.log('API Response:', response);
                 setTemp(response.data)

@@ -1,14 +1,20 @@
+import { mainPageObjProps } from "../components/mainPage/MainPage"
+
 async function callPostApiWithStringBody<T>(
     url: string,
-    requestBody: string
+    requestBody: mainPageObjProps
 ): Promise<T> {
     try {
+        if(requestBody==null || requestBody==undefined){
+            throw new Error("input must be there.");
+
+        }
         const response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: requestBody,
+            body: JSON.stringify(requestBody),
         });
 
         if (!response.ok) {
