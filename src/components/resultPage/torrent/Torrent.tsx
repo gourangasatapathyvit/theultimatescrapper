@@ -1,15 +1,6 @@
-interface torrentResult {
-  magnet: string|null;
-  name: string|null;
-  size: string|null;
-  seeders: string|null;
-  leechers: string|null;
-  uploaded_at: string|null;
-  uploader: string|null;
-  category:string|null;
-}
+import { TorrentData } from "../ResPage";
 interface aggObject {
-  torrent: torrentResult;
+  torrent: TorrentData;
 }
 
 export default function Torrent({ torrent }: aggObject) {
@@ -26,9 +17,8 @@ export default function Torrent({ torrent }: aggObject) {
         <span className="leechers">
           <b>L</b>: {torrent.leechers}
         </span>
-        <span className="uploaded_at">{torrent.uploaded_at}</span>
+        <span className="uploaded_at">{torrent.uploadedAt}</span>
         <span className="uploaded_by">{torrent.uploader}</span>
-        <span className="category">{torrent.category}</span>
       </div>
       <div className="actions">
         <a href={torrent.magnet}>Download</a>
