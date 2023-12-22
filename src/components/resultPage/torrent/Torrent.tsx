@@ -6,27 +6,27 @@ interface aggObject {
 export default function Torrent({ torrent }: aggObject) {
   return (
     <div className="torrent">
-      <a href={torrent.magnet}>
+      <a href={torrent.magnetLink}>
         <span className="name">{torrent.name}</span>
       </a>
       <div className="info">
         <span className="size">{torrent.size}</span>
         <span className="seeders">
-          <b>S</b>: {torrent.seeders}
+          <b>S</b>: {torrent.seed}
         </span>
         <span className="leechers">
-          <b>L</b>: {torrent.leechers}
+          <b>L</b>: {torrent.leech}
         </span>
-        <span className="uploaded_at">{torrent.uploadedAt}</span>
+      
         <span className="uploaded_by">{torrent.uploader}</span>
       </div>
       <div className="actions">
-        <a href={torrent.magnet}>Download</a>
-        {torrent.magnet && torrent.magnet.startsWith("magnet:?xt=urn:btih:") && (
+        <a href={torrent.downLoadLink ?torrent.downLoadLink:""}>Download</a>
+        {torrent.magnetLink && torrent.magnetLink.startsWith("magnet:?xt=urn:btih:") && (
           <a
             href={
               "https://webtor.io/show?magnet=" +
-              encodeURIComponent(torrent.magnet)
+              encodeURIComponent(torrent.magnetLink)
             }
             target="_blank"
             rel="noopener noreferrer"

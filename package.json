@@ -10,12 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fortawesome/react-fontawesome": "^0.1.16",
-    "@fortawesome/fontawesome-svg-core": "^1.2.36",
-    "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@chakra-ui/react": "^2.6.1",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.16",
     "@types/react-router-dom": "^5.3.3",
     "autoprefixer": "^9.8.6",
     "framer-motion": "^10.12.10",
