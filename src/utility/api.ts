@@ -1,31 +1,27 @@
-import { mainPageObjProps } from "../components/mainPage/MainPage"
+import { mainPageObjProps } from "../components/mainPage/MainPage";
+import axios, { AxiosResponse } from "axios";
 
-async function callPostApiWithStringBody<T>(
-    url: string,
-    requestBody: mainPageObjProps
+export default async function callPostApiWithStringBody<T>(
+  url: string,
+  requestBody: mainPageObjProps
 ): Promise<T> {
-    try {
-        if(requestBody==null || requestBody==undefined){
-            throw new Error("input must be there.");
+  if (!requestBody) {
+    throw new Error("Request body is required.");
+  }
 
-        }
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestBody),
-        });
+  try {
+    const response: AxiosResponse<T> = await axios.post<T>(url, requestBody);
 
-        if (!response.ok) {
-            throw new Error("Network response was not ok.");
-        }
-
-        const data: T = await response.json();
-        return data;
-    } catch (error:any) {
-        throw new Error(`Error: ${error.message}`);
+    if (response.status !== 200) {
+      throw new Error("Network response was not ok.");
     }
-}
 
-export default callPostApiWithStringBody;
+    return response.data;
+  } catch (error:any) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(`Axios Error: ${error.message}`);
+    } else {
+      throw new Error(`Error: ${error.message}`);
+    }
+  }
+}

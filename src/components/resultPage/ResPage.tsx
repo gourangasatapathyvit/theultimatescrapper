@@ -24,21 +24,21 @@ const ResPage = ({ testData }: resPageObjProps) => {
     const [temp, setTemp] = useState<TorrentData[]>([]);
 
     useEffect(() => {
+      document.title = "" + testData.inputQuery + "_" + testData.catagory;
         if (testData.inputQuery) {
             const apiUrl = "http://localhost:8090/getAllRes";
 
-            callPostApiWithStringBody<any>(apiUrl, testData)
-                .then((response) => {
+            callPostApiWithStringBody<TorrentData[]>(apiUrl, testData)
+                .then((response:TorrentData[]) => {
                     console.log("API Response:", response);
                     setTemp(response);
                 })
-                .catch((error) => {
+                .catch((error:Error) => {
                     console.error("API Error:", error);
                 });
         }
     }, []);
 
-    document.title = "" + testData.inputQuery + "_" + testData.catagory;
 
     return (
         <div className="main">
