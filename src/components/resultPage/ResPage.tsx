@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import callPostApiWithStringBody from "../../utility/api";
 
 interface resPageObjProps {
-    testData: mainPageObjProps;
+    formData: mainPageObjProps;
 }
 export interface TorrentData {
     name: string;
@@ -20,25 +20,35 @@ export interface TorrentData {
     image: string | null;
 }
 
-const ResPage = ({ testData }: resPageObjProps) => {
+const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
+    const [testData, setTestData] = useState<mainPageObjProps>(initialTestData);
     const [temp, setTemp] = useState<TorrentData[]>([]);
+    const loadSavedState = () => {
+        const savedState = localStorage.getItem("mainPageObj");
+        if (savedState) {
+            const parsedState: mainPageObjProps = JSON.parse(savedState);
+            setTestData(parsedState);
+        }
+    };
+    useEffect(() => {
+        loadSavedState(); 
+      }, []);
 
     useEffect(() => {
-      document.title = "" + testData.inputQuery + "_" + testData.catagory;
+        document.title = "" + testData.inputQuery + "_" + testData.catagory;
         if (testData.inputQuery) {
             const apiUrl = "http://localhost:8090/getAllRes";
 
             callPostApiWithStringBody<TorrentData[]>(apiUrl, testData)
-                .then((response:TorrentData[]) => {
+                .then((response: TorrentData[]) => {
                     console.log("API Response:", response);
                     setTemp(response);
                 })
-                .catch((error:Error) => {
+                .catch((error: Error) => {
                     console.error("API Error:", error);
                 });
         }
-    }, []);
-
+    }, [testData]);
 
     return (
         <div className="main">

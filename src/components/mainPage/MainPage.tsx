@@ -17,22 +17,63 @@ export interface mainPageObjProps {
 }
 
 const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
-  const [mainPageObj, setMainPageObj] = useState<mainPageObjProps>({
-    source: [],
-    catagory: "",
-    inputQuery: "",
-  });
+ 
+  // const [mainPageObj, setMainPageObj] = useState<mainPageObjProps>({
+  //   source: [],
+  //   catagory: "",
+  //   inputQuery: "",
+  // });
+
+  const [mainPageObj, setMainPageObj] = useState<mainPageObjProps>(() => {
+    const storedData = localStorage.getItem('mainPageObj');
+    return storedData ? JSON.parse(storedData) : {
+     source: [],
+     catagory: "",
+     inputQuery: "",
+    };
+   });
+
+  const loadSavedState = () => {
+    const savedState = localStorage.getItem('mainPageObj');
+    if (savedState) {
+      setMainPageObj(JSON.parse(savedState));
+    }
+  };
 
   useEffect(() => {
+    loadSavedState(); 
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('mainPageObj', JSON.stringify(mainPageObj));
     getAllData(mainPageObj);
-  }, [getAllData, mainPageObj]);
+
+    const sourceCheckedState: { [key: string]: boolean } = {};
+    mainPageObj.source?.forEach((source) => {
+      sourceCheckedState[source] = true;
+    });
+
+    setCheckedStateSource(sourceCheckedState);
+
+  const catagoryCheckedState: { [key: string]: boolean } = {};
+  catagory.forEach((cat) => {
+    catagoryCheckedState[cat] = mainPageObj.catagory === cat;
+  });
+  setcheckedStateCatagory(catagoryCheckedState);
+
+  if (mainPageObj.catagory && checkedStateCatagory[mainPageObj.catagory]  !== true) {
+    updateCatagory(mainPageObj.catagory, true);
+  }
+  
+
+  }, [getAllData, mainPageObj,mainPageObj.source, mainPageObj.catagory, catagory]);
 
 
-  // this is regarding readonly function
   const [checkedStateSource, setCheckedStateSource] = useState<{
     [key: string]: boolean;
   }>({});
-
+  
+  // this is regarding readonly function
   const [checkedStateCatagory, setcheckedStateCatagory] = useState<{
     [key: string]: boolean;
   }>({});
@@ -74,6 +115,19 @@ const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
 
     checked? setMainPageObj((prevState) => ({...prevState, catagory: name,}))
             : setMainPageObj((prevState) => ({...prevState,catagory: null,}));
+  };
+
+  const updateCatagory = (name: string, checked: boolean) => {
+    setcheckedStateCatagory(prevState => ({
+      ...prevState,
+      [name]: checked,
+    }));
+
+    checked ? setCheckedItem(name) : setCheckedItem("");
+
+    checked
+      ? setMainPageObj(prevState => ({ ...prevState, catagory: name }))
+      : setMainPageObj(prevState => ({ ...prevState, catagory: null }));
   };
 
   return (

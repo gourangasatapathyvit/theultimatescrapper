@@ -5,18 +5,18 @@ import {
 import MainPage from "./components/mainPage/MainPage";
 import { mainPageObjProps } from "./components/mainPage/MainPage";
 import ResPage from "./components/resultPage/ResPage";
-import { useEffect, useState,useCallback } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [mainPageObjProps, setMainPageObjProps] = useState<mainPageObjProps>({
-    source: [],
-    catagory: "",
-    inputQuery: "",
+      source: [],
+      catagory: "",
+      inputQuery: "",
   });
 
-  const handleMainPageObjChange = useCallback((data: mainPageObjProps) => {
+  const handleMainPageObjChange =(data:mainPageObjProps)=>{
     setMainPageObjProps(data);
-  }, []);
+  }
 
   useEffect(() => {
     setMainPageObjProps(mainPageObjProps);
@@ -31,7 +31,7 @@ function App() {
                 sources={["1337x", "YTS","PirateBay"]} getAllData={handleMainPageObjChange} />
             }
           />
-          <Route path="/result" element={<ResPage testData={mainPageObjProps} />} />
+          <Route path="/result" element={<ResPage formData={mainPageObjProps} />} />
         </Routes>
       </Router>
     </>
