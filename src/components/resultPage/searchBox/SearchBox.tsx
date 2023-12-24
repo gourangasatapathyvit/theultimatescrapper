@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./searchbox.css";
 import { useEffect, useState } from "react";
+import callPostApiWithStringBody from "../../../utility/api";
 
 interface props {
   name: string;
@@ -21,7 +22,7 @@ export default function SearchBox({ name }: props) {
   const resetSearchQuery = () => setSearchQuery("");
 
   const search = () => {
-    console.log("searching");
+    console.log("searching",searchQuery);
   };
 
   return (
@@ -33,14 +34,14 @@ export default function SearchBox({ name }: props) {
         onChange={handleChange}
         onKeyPress={(e) => e.key === "Enter" && search()}
         className="textbox"
-        autoComplete="new-password"
         autoCorrect="off"
         spellCheck="false"
         maxLength={2048}
-        placeholder="What do you want to download?"
+        placeholder="What do you want to search?"
+        readOnly
       />
 
-      {searchQuery.length !== 0 && (
+      {/* {searchQuery.length !== 0 && (
         <div
           role="button"
           className="cross"
@@ -49,7 +50,7 @@ export default function SearchBox({ name }: props) {
         >
           <FontAwesomeIcon icon={faTimes} className="searchicon" />
         </div>
-      )}
+      )} */}
     </div>
   );
 }
