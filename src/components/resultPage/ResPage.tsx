@@ -21,6 +21,8 @@ export interface TorrentData {
 }
 
 const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
+    const BASEURL = import.meta.env.VITE_APP_BASE_URL;
+
     const [testData, setTestData] = useState<mainPageObjProps>(initialTestData);
     const [temp, setTemp] = useState<TorrentData[]>([]);
     const loadSavedState = () => {
@@ -37,9 +39,8 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
     useEffect(() => {
         document.title = "" + testData.inputQuery + "_" + testData.catagory;
         if (testData.inputQuery) {
-            const apiUrl = "http://localhost:8090/getAllRes";
 
-            callPostApiWithStringBody<TorrentData[]>(apiUrl, testData)
+            callPostApiWithStringBody<TorrentData[]>(BASEURL+"getAllRes", testData)
                 .then((response: TorrentData[]) => {
                     console.log("API Response:", response);
                     setTemp(response);
