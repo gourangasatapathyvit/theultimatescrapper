@@ -42,7 +42,7 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
 
             callPostApiWithStringBody<TorrentData[]>(BASEURL+"getAllRes", testData)
                 .then((response: TorrentData[]) => {
-                    console.log("API Response:", response);
+                    // console.log("API Response:", response);
                     setTemp(response);
                 })
                 .catch((error: Error) => {

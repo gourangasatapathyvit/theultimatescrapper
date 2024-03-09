@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scraperfrontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: scraperfrontend
+  template:
+    metadata:
+      labels:
+        app: scraperfrontend
+    spec:
+      containers:
+        - name: scraperfrontend
+          image: gouranga1234/scraperfrontend:1.0.0
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scraperfrontend-service
+spec:
+  selector:
+    app: scraperfrontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: react-app-ingress
+# spec:
+#   rules:
+#     - http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: scraperfrontend-service
+#                 port:
+#                   number: 80

@@ -1,8 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "./searchbox.css";
 import { useEffect, useState } from "react";
-import callPostApiWithStringBody from "../../../utility/api";
 
 interface props {
   name: string;
@@ -19,7 +18,7 @@ export default function SearchBox({ name }: props) {
     setSearchQuery(e.target.value);
   };
 
-  const resetSearchQuery = () => setSearchQuery("");
+  // const resetSearchQuery = () => setSearchQuery("");
 
   const search = () => {
     console.log("searching",searchQuery);
