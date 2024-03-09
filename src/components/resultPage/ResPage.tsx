@@ -49,7 +49,7 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
                     console.error("API Error:", error);
                 });
         }
-    }, [testData]);
+    }, [BASEURL, testData]);
 
     return (
         <div className="main">
