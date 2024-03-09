@@ -40,14 +40,36 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
         document.title = "" + testData.inputQuery + "_" + testData.catagory;
         if (testData.inputQuery) {
 
-            callPostApiWithStringBody<TorrentData[]>(BASEURL+"getAllRes", testData)
-                .then((response: TorrentData[]) => {
-                    // console.log("API Response:", response);
-                    setTemp(response);
-                })
-                .catch((error: Error) => {
-                    console.error("API Error:", error);
-                });
+            // callPostApiWithStringBody<TorrentData[]>(BASEURL+"getAllRes", testData)
+            //     .then((response: TorrentData[]) => {
+            //         // console.log("API Response:", response);
+            //         setTemp(response);
+            //     })
+            //     .catch((error: Error) => {
+            //         console.error("API Error:", error);
+            //     });
+            const url = BASEURL + 'getAllRes';
+            const requestBody = JSON.stringify(testData); 
+            fetch(url, {
+                method: 'POST',
+                body: requestBody,
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+              })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse response body as JSON
+              })
+              .then((response: TorrentData[]) => {
+                setTemp(response);
+              })
+              .catch((error: Error) => {
+                console.error('API Error:', error);
+              });
         }
     }, [BASEURL, testData]);
 
