@@ -3,7 +3,7 @@ import SearchBox from "./searchBox/SearchBox";
 import "./ResPage.css";
 import { mainPageObjProps } from "../mainPage/MainPage";
 import { useEffect, useState } from "react";
-import callPostApiWithStringBody from "../../utility/api";
+// import callPostApiWithStringBody from "../../utility/api";
 
 interface resPageObjProps {
     formData: mainPageObjProps;
