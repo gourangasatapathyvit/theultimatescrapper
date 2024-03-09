@@ -24,6 +24,19 @@ const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
   //   inputQuery: "",
   // });
 
+  const [checkedItem, setCheckedItem] = useState<string>("");
+
+   // this is regarding source data function
+   const [checkedStateSource, setCheckedStateSource] = useState<{
+    [key: string]: boolean;
+  }>({});
+  
+  // this is regarding readonly function
+  const [checkedStateCatagory, setcheckedStateCatagory] = useState<{
+    [key: string]: boolean;
+  }>({});
+
+  // 1. if there is any data in local storage set as default else empty state
   const [mainPageObj, setMainPageObj] = useState<mainPageObjProps>(() => {
     const storedData = localStorage.getItem('mainPageObj');
     return storedData ? JSON.parse(storedData) : {
@@ -33,6 +46,7 @@ const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
     };
    });
 
+   // 2. handled for page refresh case , if any data is present , then load existing data
   const loadSavedState = () => {
     const savedState = localStorage.getItem('mainPageObj');
     if (savedState) {
@@ -40,46 +54,7 @@ const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
     }
   };
 
-  useEffect(() => {
-    loadSavedState(); 
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('mainPageObj', JSON.stringify(mainPageObj));
-    getAllData(mainPageObj);
-
-    const sourceCheckedState: { [key: string]: boolean } = {};
-    mainPageObj.source?.forEach((source) => {
-      sourceCheckedState[source] = true;
-    });
-
-    setCheckedStateSource(sourceCheckedState);
-
-  const catagoryCheckedState: { [key: string]: boolean } = {};
-  catagory.forEach((cat) => {
-    catagoryCheckedState[cat] = mainPageObj.catagory === cat;
-  });
-  setcheckedStateCatagory(catagoryCheckedState);
-
-  if (mainPageObj.catagory && checkedStateCatagory[mainPageObj.catagory]  !== true) {
-    updateCatagory(mainPageObj.catagory, true);
-  }
-  
-
-  }, [getAllData, mainPageObj,mainPageObj.source, mainPageObj.catagory, catagory]);
-
-
-  const [checkedStateSource, setCheckedStateSource] = useState<{
-    [key: string]: boolean;
-  }>({});
-  
-  // this is regarding readonly function
-  const [checkedStateCatagory, setcheckedStateCatagory] = useState<{
-    [key: string]: boolean;
-  }>({});
-
-  const [checkedItem, setCheckedItem] = useState<string>("");
-
+  // onchange source
   const handleChangeSource = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
     setCheckedStateSource({
@@ -89,6 +64,7 @@ const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
 
     let res: string[] = [];
 
+    // maintain {1337x: true, PirateBay: true} structure,at onchange update mainPageObjProps 
     if (!checked) {
       res =
         mainPageObj.source?.filter(
@@ -103,6 +79,8 @@ const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
       source: res,
     }));
   };
+
+  // onchange category
   const handleChangeCatagory = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
 
@@ -117,18 +95,31 @@ const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
             : setMainPageObj((prevState) => ({...prevState,catagory: null,}));
   };
 
-  const updateCatagory = (name: string, checked: boolean) => {
-    setcheckedStateCatagory(prevState => ({
-      ...prevState,
-      [name]: checked,
-    }));
+  useEffect(() => {
+    loadSavedState(); 
+  }, []);
 
-    checked ? setCheckedItem(name) : setCheckedItem("");
+  useEffect(() => {
+    localStorage.setItem('mainPageObj', JSON.stringify(mainPageObj));
+    getAllData(mainPageObj);
 
-    checked
-      ? setMainPageObj(prevState => ({ ...prevState, catagory: name }))
-      : setMainPageObj(prevState => ({ ...prevState, catagory: null }));
-  };
+    const sourceCheckedState: { [key: string]: boolean } = {};
+    const catagoryCheckedState: { [key: string]: boolean } = {};
+    
+    mainPageObj.source?.forEach((source) => {
+      sourceCheckedState[source] = true;
+    });
+
+    setCheckedStateSource(sourceCheckedState);
+
+    catagory.forEach((cat) => {
+      catagoryCheckedState[cat] = mainPageObj.catagory === cat;
+    });
+    
+    setcheckedStateCatagory(catagoryCheckedState);
+
+    (mainPageObj.catagory && checkedStateCatagory[mainPageObj.catagory]  == true)? setCheckedItem(mainPageObj.catagory) : setCheckedItem("");
+  }, [getAllData, mainPageObj,mainPageObj.source, mainPageObj.catagory, catagory]);
 
   return (
     <>
@@ -183,7 +174,7 @@ const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
             <InputComp mainPageObj={mainPageObj} updateAllData={setMainPageObj} />
 
             <div className="p-4">
-              <h2 className="underline uppercase">Sources</h2>
+              <h2 className="underline uppercase">sources</h2>
               <div className="flex gap-4 pt-4">
                 {sources.map((eachSource) => (
                   <label key={eachSource}>
@@ -200,7 +191,7 @@ const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
             </div>
 
             <div className="p-4">
-              <h2 className="underline uppercase">Catagory</h2>
+              <h2 className="underline uppercase">catagory</h2>
               <div className="flex gap-4 pt-4">
                 {catagory.map((eachSource) => (
                   <label key={eachSource}>

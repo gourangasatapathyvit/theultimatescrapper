@@ -8,16 +8,20 @@ import ResPage from "./components/resultPage/ResPage";
 import { useEffect, useState } from "react";
 
 function App() {
+
+  // initialize
   const [mainPageObjProps, setMainPageObjProps] = useState<mainPageObjProps>({
       source: [],
       catagory: "",
       inputQuery: "",
   });
 
+  // set first page result to transfer result page 
   const handleMainPageObjChange =(data:mainPageObjProps)=>{
     setMainPageObjProps(data);
   }
 
+  // always watch mainPageObjProps change, if it is update it
   useEffect(() => {
     setMainPageObjProps(mainPageObjProps);
   }, [mainPageObjProps]);
