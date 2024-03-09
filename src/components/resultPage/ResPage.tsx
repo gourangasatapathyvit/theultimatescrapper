@@ -59,6 +59,8 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
                 mode: 'cors',
               })
               .then(response => {
+                console.log("processing");
+                
                 if (!response.ok) {
                   throw new Error('Network response was not ok');
                 }

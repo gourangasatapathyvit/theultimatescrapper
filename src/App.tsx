@@ -32,7 +32,7 @@ function App() {
         <Routes>
           <Route path="/" element={ <MainPage
                 catagory={["Movies", "Series", "Books", "Songs"]}
-                sources={["1337x", "YTS","PirateBay"]} getAllData={handleMainPageObjChange} />
+                sources={["Snowfl", "YTS","PirateBay"]} getAllData={handleMainPageObjChange} />
             }
           />
           <Route path="/result" element={<ResPage formData={mainPageObjProps} />} />
