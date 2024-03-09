@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontendscraper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontendscraper
+  template:
+    metadata:
+      labels:
+        app: frontendscraper
+    spec:
+      containers:
+        - name: frontendscraper
+          image: gouranga1234/scraperfrontend:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "256Mi"
+            requests:
+              cpu: "0.5"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontendscraper-loadbalancer
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontendscraper-service
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: react-app-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontendscraper-service
+                port:
+                  number: 80

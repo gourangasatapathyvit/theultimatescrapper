@@ -15,6 +15,7 @@ spec:
       containers:
         - name: scraperfrontend
           image: gouranga1234/scraperfrontend:1.0.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
 ---
