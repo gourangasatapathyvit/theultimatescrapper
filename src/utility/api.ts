@@ -10,7 +10,11 @@ export default async function callPostApiWithStringBody<T>(
   }
 
   try {
-    const response: AxiosResponse<T> = await axios.post<T>(url, requestBody);
+    const response: AxiosResponse<T> = await axios.post<T>(url, requestBody,{
+      headers: {
+        'Content-Security-Policy': 'upgrade-insecure-requests'
+    }
+    });
 
     if (response.status !== 200) {
       throw new Error("Network response was not ok.");
