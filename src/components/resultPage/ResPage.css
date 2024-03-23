@@ -1,3 +1,8 @@
+.segment {
+  opacity: 0;
+  fill: red;
+}
+
 .found {
   margin-left: 69px;
   margin-top: 10px;

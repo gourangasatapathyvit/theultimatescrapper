@@ -1,10 +1,10 @@
 import Torrent from "./torrent/Torrent";
 import SearchBox from "./searchBox/SearchBox";
-import "./ResPage.css";
 import { mainPageObjProps } from "../mainPage/MainPage";
 import { useEffect, useState } from "react";
 import callPostApiWithStringBody from "../../utility/api";
-// import callPostApiWithStringBody from "../../utility/api";
+import "./ResPage.css";
+import LoadIngSpinner from "../styleUtility/LoadIngSpinner";
 
 interface resPageObjProps {
     formData: mainPageObjProps;
@@ -24,6 +24,7 @@ export interface TorrentData {
 const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
     const BASEURL = import.meta.env.VITE_APP_BASE_URL;
 
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [testData, setTestData] = useState<mainPageObjProps>(initialTestData);
     const [temp, setTemp] = useState<TorrentData[]>([]);
     const loadSavedState = () => {
@@ -33,20 +34,25 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
             setTestData(parsedState);
         }
     };
+
     useEffect(() => {
-        loadSavedState(); 
-      }, []);
+        loadSavedState();
+    }, []);
 
     useEffect(() => {
         document.title = "" + testData.inputQuery + "_" + testData.catagory;
         if (testData.inputQuery) {
-
-            callPostApiWithStringBody<TorrentData[]>(BASEURL+"getAllRes", testData)
+            callPostApiWithStringBody<TorrentData[]>(
+                BASEURL + "getAllRes",
+                testData
+            )
                 .then((response: TorrentData[]) => {
                     // console.log("API Response:", response);
                     setTemp(response);
+                    setIsLoading(false);
                 })
                 .catch((error: Error) => {
+                    setIsLoading(false);
                     console.error("API Error:", error);
                 });
         }
@@ -59,12 +65,14 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
                     <SearchBox name={testData.inputQuery} />
                 )}
             </div>
-            {temp && temp.length > 0 ? (
+            {!isLoading && temp && temp.length > 0 ? (
                 temp.map((res, index) => (
                     <Torrent key={index} torrent={res}></Torrent>
                 ))
+            ) : isLoading ? (
+                <LoadIngSpinner/>
             ) : (
-                <p>No results found.</p>
+                <p>No data Found</p>
             )}
         </div>
     );
