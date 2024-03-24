@@ -24,6 +24,7 @@ export interface TorrentData {
 
 const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
     const BASEURL = import.meta.env.VITE_APP_BASE_URL;
+    console.log("onready = "+JSON.stringify(initialTestData) );
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [testData, setTestData] = useState<mainPageObjProps>(initialTestData);
@@ -42,6 +43,7 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
     };
 
     useEffect(() => {
+        console.log("lokieffect");
         loadSavedState();
         setIsFirstEffectComplete(true);
     }, []);
@@ -57,6 +59,7 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
                     testData
                 )
                     .then((response: TorrentData[]) => {
+
                         setTemp(response);
                         setIsLoading(false);
                     })
