@@ -6,6 +6,7 @@ import MainPage from "./components/mainPage/MainPage";
 import { mainPageObjProps } from "./components/mainPage/MainPage";
 import ResPage from "./components/resultPage/ResPage";
 import { useEffect, useState } from "react";
+import Test from "./components/test/Test";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
             }
           />
           <Route path="/result" element={<ResPage formData={mainPageObjProps} />} />
+          <Route path="/test" element={<Test />} />
         </Routes>
       </Router>
     </>

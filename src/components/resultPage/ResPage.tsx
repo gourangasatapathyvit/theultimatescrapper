@@ -24,7 +24,7 @@ export interface TorrentData {
 
 const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
     const BASEURL = import.meta.env.VITE_APP_BASE_URL;
-    console.log("onready = "+JSON.stringify(initialTestData) );
+    console.log("onready = " );
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [testData, setTestData] = useState<mainPageObjProps>(initialTestData);
@@ -51,7 +51,7 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
     useEffect(() => {
         if (isFirstEffectComplete) {
             document.title = "" + testData.inputQuery + "_" + testData.catagory;
-            console.log(testData);
+            console.log("testData"+JSON.stringify(testData));
 
             if (testData.inputQuery) {
                 callPostApiWithStringBody<TorrentData[]>(
