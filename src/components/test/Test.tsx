@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const Test = () => {
 
-    const [testData, setTestData] = useState<mainPageObjProps>();
+    const [, setTestData] = useState<mainPageObjProps>();
     const loadSavedState = () => {
         const savedState = localStorage.getItem("mainPageObj");
         console.log("savedState test = " + savedState);
