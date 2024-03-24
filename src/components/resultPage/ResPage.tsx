@@ -24,7 +24,6 @@ export interface TorrentData {
 
 const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
     const BASEURL = import.meta.env.VITE_APP_BASE_URL;
-    console.log("onready = " );
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [testData, setTestData] = useState<mainPageObjProps>(initialTestData);
@@ -34,7 +33,6 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
 
     const loadSavedState = () => {
         const savedState = localStorage.getItem("mainPageObj");
-        console.log("savedState = " + savedState);
 
         if (savedState) {
             const parsedState: mainPageObjProps = JSON.parse(savedState);
@@ -43,15 +41,13 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
     };
 
     useEffect(() => {
-        console.log("lokieffect");
         loadSavedState();
         setIsFirstEffectComplete(true);
     }, []);
 
     useEffect(() => {
         if (isFirstEffectComplete) {
-            document.title = "" + testData.inputQuery + "_" + testData.catagory;
-            console.log("testData"+JSON.stringify(testData));
+            document.title = "" + testData.inputQuery + "::" + testData.catagory;
 
             if (testData.inputQuery) {
                 callPostApiWithStringBody<TorrentData[]>(

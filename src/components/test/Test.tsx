@@ -1,7 +1,6 @@
-import DataNotFound from "../styleUtility/DataNotFound";
 import { mainPageObjProps } from "../mainPage/MainPage";
 import { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 const Test = () => {
     const [ipData, setIpData] = useState<Record<string, unknown>>({});
@@ -22,7 +21,6 @@ const Test = () => {
     };
 
     useEffect(() => {
-        console.log("useEffect test");
         loadSavedState();
     }, []);
 
