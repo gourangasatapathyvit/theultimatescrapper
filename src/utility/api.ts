@@ -23,9 +23,9 @@ export default async function callPostApiWithStringBody<T>(
     return response.data;
   } catch (error:any) {
     if (axios.isAxiosError(error)) {
-      throw new Error(`Axios Error: ${error.message}`);
+      throw new Error(`Axios Error: ${error}`);
     } else {
-      throw new Error(`Error: ${error.message}`);
+      throw new Error(`General Error: ${error.message}`);
     }
   }
 }
