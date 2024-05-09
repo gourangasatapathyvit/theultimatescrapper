@@ -23,7 +23,6 @@ const PopUp = ({source,_isModalOpen,toggleModal,data,contentType}: PopUpProps) =
         inputQuery: "",
     });
     const sourceContext = useContext(MyGlobalContext);
-    console.log('comp1',sourceContext?.mainPageObjProps.inputQuery);
 
     const onClickClose = ()=>{
         setIsModalOpen(false);
@@ -31,7 +30,6 @@ const PopUp = ({source,_isModalOpen,toggleModal,data,contentType}: PopUpProps) =
     }
     
     const handleCheckboxChange = (source: string) => {
-        console.log('source',source);
         
         const isChecked = checkedCheckBoxes.includes(source);
         if (isChecked) {
@@ -61,7 +59,6 @@ const PopUp = ({source,_isModalOpen,toggleModal,data,contentType}: PopUpProps) =
     
     useEffect(() => {
         if (shouldNavigate) {
-            console.log('popup', mainPageObjProps);
             navigate(`/result`);
             setShouldNavigate(false);
         }
@@ -72,7 +69,6 @@ const PopUp = ({source,_isModalOpen,toggleModal,data,contentType}: PopUpProps) =
         const popModel = document.getElementById(
             "my_modal_1"
         ) as HTMLDialogElement;
-        console.log(isModalOpen);
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === "Escape") {
                 setIsModalOpen(false);

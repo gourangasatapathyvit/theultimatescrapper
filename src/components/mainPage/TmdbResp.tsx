@@ -36,7 +36,6 @@ const TmdbResp = () => {
     const scrapeSeriesContent = (show: TmdbTvsResp) => {
         setIsModalOpen(true);
         setContent("show");
-        console.log(show.original_name);
         setCombinedData(() => ({
             combinedData: {
                 series: show,
