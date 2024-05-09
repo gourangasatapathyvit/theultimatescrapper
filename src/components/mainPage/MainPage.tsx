@@ -3,33 +3,18 @@ import mainBg from "../../assets/webscrape.jpg";
 import InputComp from "../utilityComponents/InputComp";
 import Footer from "../footer/Footer";
 import { useEffect, useState } from "react";
+import { mainPageObjProps } from "../../utility/AllProps";
+import {useContext} from 'react';
+import {MyGlobalContext} from '../../App';
 
 interface mainPageProps {
-  sources: string[];
   catagory: string[];
-  getAllData:(data: mainPageObjProps) => void;
 }
 
-export interface mainPageObjProps {
-  source: string[] | null;
-  catagory: string | null;
-  inputQuery: string | null;
-}
-
-const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
- 
-  // const [mainPageObj, setMainPageObj] = useState<mainPageObjProps>({
-  //   source: [],
-  //   catagory: "",
-  //   inputQuery: "",
-  // });
+const MainPage = ({ catagory }: mainPageProps) => {
 
   const [checkedItem, setCheckedItem] = useState<string>("");
-
-   // this is regarding source data function
-   const [checkedStateSource, setCheckedStateSource] = useState<{
-    [key: string]: boolean;
-  }>({});
+  const sourceContext = useContext(MyGlobalContext);
   
   // this is regarding readonly function
   const [checkedStateCatagory, setcheckedStateCatagory] = useState<{
@@ -54,32 +39,6 @@ const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
     }
   };
 
-  // onchange source
-  const handleChangeSource = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target;
-    setCheckedStateSource({
-      ...checkedStateSource,
-      [name]: checked,
-    });
-
-    let res: string[] = [];
-
-    // maintain {1337x: true, PirateBay: true} structure,at onchange update mainPageObjProps 
-    if (!checked) {
-      res =
-        mainPageObj.source?.filter(
-          (item) => item !== mainPageObj.source?.find((item) => item === name)
-        ) ?? [];
-    } else {
-      res = [...(mainPageObj.source ?? []), name];
-    }
-
-    setMainPageObj((prevState) => ({
-      ...prevState,
-      source: res,
-    }));
-  };
-
   // onchange category
   const handleChangeCatagory = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
@@ -101,25 +60,16 @@ const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
 
   useEffect(() => {
     localStorage.setItem('mainPageObj', JSON.stringify(mainPageObj));
-    getAllData(mainPageObj);
 
-    const sourceCheckedState: { [key: string]: boolean } = {};
     const catagoryCheckedState: { [key: string]: boolean } = {};
-    
-    mainPageObj.source?.forEach((source) => {
-      sourceCheckedState[source] = true;
-    });
-
-    setCheckedStateSource(sourceCheckedState);
-
     catagory.forEach((cat) => {
       catagoryCheckedState[cat] = mainPageObj.catagory === cat;
     });
-    
     setcheckedStateCatagory(catagoryCheckedState);
-
+    
     (mainPageObj.catagory && checkedStateCatagory[mainPageObj.catagory]  == true)? setCheckedItem(mainPageObj.catagory) : setCheckedItem("");
-  }, [getAllData, mainPageObj,mainPageObj.source, mainPageObj.catagory, catagory]);
+    sourceContext?.setMainPageObjProps(mainPageObj)
+  }, [mainPageObj,mainPageObj.source, mainPageObj.catagory, catagory]);
 
   return (
     <>
@@ -172,23 +122,6 @@ const MainPage = ({ sources, catagory,getAllData }: mainPageProps) => {
             />
 
             <InputComp mainPageObj={mainPageObj} updateAllData={setMainPageObj} />
-
-            <div className="p-4">
-              <h2 className="underline uppercase">sources</h2>
-              <div className="flex gap-4 pt-4">
-                {sources.map((eachSource) => (
-                  <label key={eachSource}>
-                    <input
-                      type="checkbox"
-                      name={eachSource}
-                      checked={checkedStateSource[eachSource] || false}
-                      onChange={handleChangeSource}
-                    />
-                    {eachSource}
-                  </label>
-                ))}
-              </div>
-            </div>
 
             <div className="p-4">
               <h2 className="underline uppercase">catagory</h2>
