@@ -8,6 +8,7 @@ function ProxyComponent() {
     useEffect(() => {
         async function fetchData() {
             try {
+                
                 // const x = axios.get('https://www.2embed.skin/movie/tt8178634');
                 // console.log(x);
                 
