@@ -12,6 +12,7 @@ const ResPage = () => {
     const BASEURL = import.meta.env.VITE_APP_BASE_URL;
     const defaultMainPageObjProps: mainPageObjProps = {
         inputQuery: '', 
+        tmdbId: null, 
         catagory: '', 
        source:[]
     };

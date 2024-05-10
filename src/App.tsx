@@ -25,6 +25,7 @@ function App() {
       source: [],
       catagory: "",
       inputQuery: "",
+      tmdbId:null
   });
 
   const [sourceList] = useState<string[]>(["Snowfl", "YTS","PirateBay"]);

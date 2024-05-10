@@ -21,6 +21,7 @@ const PopUp = ({source,_isModalOpen,toggleModal,data,contentType}: PopUpProps) =
         source: [],
         catagory: "",
         inputQuery: "",
+        tmdbId:null
     });
     const sourceContext = useContext(MyGlobalContext);
 
@@ -45,6 +46,7 @@ const PopUp = ({source,_isModalOpen,toggleModal,data,contentType}: PopUpProps) =
                 inputQuery: contentType==="movie"?data.combinedData.movie?.title??"":data.combinedData.series?.original_name??"",
                 source:checkedCheckBoxes,
                 catagory:null,
+                tmdbId:contentType==="movie"?data.combinedData.movie?.id??null:data.combinedData.series?.id??null,
             }
             sourceContext?.setMainPageObjProps(finalObj);
             localStorage.setItem('mainPageObj', JSON.stringify(finalObj));
@@ -96,6 +98,7 @@ const PopUp = ({source,_isModalOpen,toggleModal,data,contentType}: PopUpProps) =
             inputQuery: contentType==="movie"?data.combinedData.movie?.title??"":data.combinedData.series?.original_name??"",
             source:checkedCheckBoxes,
             catagory:null,
+            tmdbId:contentType==="movie"?data.combinedData.movie?.id??null:data.combinedData.series?.id??null,
         });
 
         return () => {

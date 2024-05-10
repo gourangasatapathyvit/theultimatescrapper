@@ -24,6 +24,7 @@ const InputComp = ({ mainPageObj, updateAllData }: getInputProps) => {
             sourceContext?.setMainPageObjProps({
                 inputQuery: input,
                 source:[],
+                tmdbId:sourceContext.mainPageObjProps.tmdbId,
                 catagory:sourceContext.mainPageObjProps.catagory,
             });
             navigate(`/moviecard`);

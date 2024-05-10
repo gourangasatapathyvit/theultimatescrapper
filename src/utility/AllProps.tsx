@@ -2,6 +2,7 @@ export interface mainPageObjProps {
     source: string[] | null;
     catagory: string | null;
     inputQuery: string | null;
+    tmdbId:number |null;
   }
 
 export interface TmdbMoviesResp {
@@ -55,4 +56,5 @@ export interface TorrentData {
     date: string;
     downLoadLink: string | null;
     image: string | null;
+    iframes:string[]|null;
 }

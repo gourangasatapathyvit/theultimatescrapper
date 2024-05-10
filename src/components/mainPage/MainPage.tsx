@@ -28,6 +28,7 @@ const MainPage = ({ catagory }: mainPageProps) => {
      source: [],
      catagory: "",
      inputQuery: "",
+     tmdbId:null
     };
    });
 
