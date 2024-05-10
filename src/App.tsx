@@ -27,13 +27,8 @@ function App() {
       inputQuery: "",
   });
 
-  const [sourceList, setSourceList] = useState<string[]>(["Snowfl", "YTS","PirateBay"]);
+  const [sourceList] = useState<string[]>(["Snowfl", "YTS","PirateBay"]);
 
-  // always watch mainPageObjProps change, if it is update it
-  // useEffect(() => {
-  //   localStorage.setItem('mainPageObj', JSON.stringify(mainPageObjProps));
-  // }, [mainPageObjProps]);
-  
   return (
     <>
        <MyGlobalContext.Provider value={{sourceList,mainPageObjProps,setMainPageObjProps}}>

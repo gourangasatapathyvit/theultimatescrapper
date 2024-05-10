@@ -38,7 +38,7 @@ const ResPage = () => {
     }, [formData?.mainPageObjProps]);
 
     useEffect(() => {
-            document.title = "" + testData.inputQuery + "::" + testData.catagory;
+            document.title = "" + testData.inputQuery;
 
             if (testData.inputQuery) {
                 callPostApiWithStringBody<TorrentData[]>(BASEURL + "getAllRes",testData)

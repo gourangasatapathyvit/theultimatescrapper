@@ -1,4 +1,4 @@
-import { TorrentData } from "../ResPage";
+import { TorrentData } from "../../../utility/AllProps";
 interface aggObject {
   torrent: TorrentData;
 }
