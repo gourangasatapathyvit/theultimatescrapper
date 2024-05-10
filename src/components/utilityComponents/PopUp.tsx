@@ -45,7 +45,7 @@ const PopUp = ({source,_isModalOpen,toggleModal,data,contentType}: PopUpProps) =
             const finalObj:mainPageObjProps = {
                 inputQuery: contentType==="movie"?data.combinedData.movie?.title??"":data.combinedData.series?.original_name??"",
                 source:checkedCheckBoxes,
-                catagory:null,
+                catagory:sourceContext?.mainPageObjProps.catagory??null,
                 tmdbId:contentType==="movie"?data.combinedData.movie?.id??null:data.combinedData.series?.id??null,
             }
             sourceContext?.setMainPageObjProps(finalObj);
@@ -97,7 +97,7 @@ const PopUp = ({source,_isModalOpen,toggleModal,data,contentType}: PopUpProps) =
         setMainPageObjProps({
             inputQuery: contentType==="movie"?data.combinedData.movie?.title??"":data.combinedData.series?.original_name??"",
             source:checkedCheckBoxes,
-            catagory:null,
+            catagory:sourceContext?.mainPageObjProps.catagory??null,
             tmdbId:contentType==="movie"?data.combinedData.movie?.id??null:data.combinedData.series?.id??null,
         });
 

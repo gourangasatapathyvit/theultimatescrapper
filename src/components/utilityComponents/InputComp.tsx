@@ -33,10 +33,15 @@ const InputComp = ({ mainPageObj, updateAllData }: getInputProps) => {
     }, [shouldNavigate, input, mainPageObj.catagory, mainPageObj.source, navigate, sourceContext]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const updatedMainPageObj = { ...mainPageObj, inputQuery: input };
-        updateAllData(updatedMainPageObj);
-        setShouldNavigate(true);
+        if(mainPageObj.catagory){
+            e.preventDefault();
+            const updatedMainPageObj = { ...mainPageObj, inputQuery: input };
+            updateAllData(updatedMainPageObj);
+            setShouldNavigate(true);
+        }
+        else{
+            alert(import.meta.env.VITE_APP_CATEGORY_NULL_ERROR)
+        }
     };
 
     return (
