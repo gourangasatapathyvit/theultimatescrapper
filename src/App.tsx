@@ -3,10 +3,20 @@ import {
   BrowserRouter as Router,Routes, Route} from "react-router-dom";
 
 import MainPage from "./components/mainPage/MainPage";
-import { mainPageObjProps } from "./components/mainPage/MainPage";
+import { mainPageObjProps } from "./utility/AllProps";
 import ResPage from "./components/resultPage/ResPage";
-import { useEffect, useState } from "react";
+import { useState,createContext } from "react";
 import Test from "./components/test/Test";
+import TmdbResp from "./components/mainPage/TmdbResp";
+// import ProxyComponent from "./components/test/ProxyComponent";
+
+interface MyGlobalContextType {
+  sourceList: string[];
+  mainPageObjProps:mainPageObjProps;
+  setMainPageObjProps: (ele: mainPageObjProps) => void;
+}
+
+export const MyGlobalContext = createContext<MyGlobalContextType | undefined>(undefined);
 
 function App() {
 
@@ -17,29 +27,22 @@ function App() {
       inputQuery: "",
   });
 
-  // set first page result to transfer result page 
-  const handleMainPageObjChange =(data:mainPageObjProps)=>{
-    setMainPageObjProps(data);
-  }
+  const [sourceList] = useState<string[]>(["Snowfl", "YTS","PirateBay"]);
 
-  // always watch mainPageObjProps change, if it is update it
-  useEffect(() => {
-    setMainPageObjProps(mainPageObjProps);
-  }, [mainPageObjProps]);
-  
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" element={ <MainPage
-                catagory={["Movies", "Series", "Books", "Songs"]}
-                sources={["Snowfl", "YTS","PirateBay"]} getAllData={handleMainPageObjChange} />
-            }
-          />
-          <Route path="/result" element={<ResPage formData={mainPageObjProps} />} />
-          <Route path="/test" element={<Test />} />
-        </Routes>
-      </Router>
+       <MyGlobalContext.Provider value={{sourceList,mainPageObjProps,setMainPageObjProps}}>
+        <Router>
+          <Routes>
+            <Route path="/" element={ <MainPage catagory={["Movies","Series"]}/>}/>
+            <Route path="/moviecard" element={<TmdbResp/>} />
+            <Route path="/result" element={<ResPage/>} />
+            <Route path="/test" element={<Test />} />
+            {/* <Route path="/chtest" element={<ProxyComponent/>} /> */}
+          </Routes>
+        </Router>
+
+       </MyGlobalContext.Provider>
     </>
   );
 }

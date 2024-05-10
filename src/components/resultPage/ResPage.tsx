@@ -1,35 +1,25 @@
 import Torrent from "./torrent/Torrent";
 import SearchBox from "./searchBox/SearchBox";
-import { mainPageObjProps } from "../mainPage/MainPage";
-import { useEffect, useState } from "react";
+import { TorrentData, mainPageObjProps } from "../../utility/AllProps";
+import { useContext, useEffect, useState } from "react";
 import callPostApiWithStringBody from "../../utility/api";
-import "./ResPage.css";
 import LoadIngSpinner from "../styleUtility/LoadIngSpinner";
 import DataNotFound from "../styleUtility/DataNotFound";
+import { MyGlobalContext } from "../../App";
+import "./ResPage.css";
 
-interface resPageObjProps {
-    formData: mainPageObjProps;
-}
-export interface TorrentData {
-    name: string;
-    magnetLink: string;
-    seed: number;
-    leech: number;
-    size: string;
-    uploader: string;
-    date: string;
-    downLoadLink: string | null;
-    image: string | null;
-}
-
-const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
+const ResPage = () => {
     const BASEURL = import.meta.env.VITE_APP_BASE_URL;
+    const defaultMainPageObjProps: mainPageObjProps = {
+        inputQuery: '', 
+        catagory: '', 
+       source:[]
+    };
 
+    const formData = useContext(MyGlobalContext);
+    const [testData, setTestData] = useState<mainPageObjProps>(formData?.mainPageObjProps || defaultMainPageObjProps);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [testData, setTestData] = useState<mainPageObjProps>(initialTestData);
     const [temp, setTemp] = useState<TorrentData[]>([]);
-    const [isFirstEffectComplete, setIsFirstEffectComplete] =
-        useState<boolean>(false);
 
     const loadSavedState = () => {
         const savedState = localStorage.getItem("mainPageObj");
@@ -39,23 +29,20 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
             setTestData(parsedState);
         }
     };
-
+    
     useEffect(() => {
+        if(formData?.mainPageObjProps.source?.length!=0 && formData?.mainPageObjProps.inputQuery){
+            setTestData(formData.mainPageObjProps);
+        }
         loadSavedState();
-        setIsFirstEffectComplete(true);
-    }, []);
+    }, [formData?.mainPageObjProps]);
 
     useEffect(() => {
-        if (isFirstEffectComplete) {
-            document.title = "" + testData.inputQuery + "::" + testData.catagory;
+            document.title = "" + testData.inputQuery;
 
             if (testData.inputQuery) {
-                callPostApiWithStringBody<TorrentData[]>(
-                    BASEURL + "getAllRes",
-                    testData
-                )
+                callPostApiWithStringBody<TorrentData[]>(BASEURL + "getAllRes",testData)
                     .then((response: TorrentData[]) => {
-
                         setTemp(response);
                         setIsLoading(false);
                     })
@@ -64,8 +51,7 @@ const ResPage = ({ formData: initialTestData }: resPageObjProps) => {
                         console.log(error);
                     });
             }
-        }
-    }, [BASEURL, testData, isFirstEffectComplete]);
+    }, [BASEURL, testData,formData?.mainPageObjProps]);
 
     return (
         <div className="main">

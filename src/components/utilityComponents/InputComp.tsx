@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { mainPageObjProps } from "../mainPage/MainPage";
+import { mainPageObjProps } from "../../utility/AllProps";
+import {useContext} from 'react';
+import {MyGlobalContext} from '../../App';
 
 export interface getInputProps {
     mainPageObj: mainPageObjProps;
@@ -11,6 +13,7 @@ const InputComp = ({ mainPageObj, updateAllData }: getInputProps) => {
     const [shouldNavigate, setShouldNavigate] = useState(false);
     const [input, setInput] = useState(mainPageObj.inputQuery || "");
     const navigate = useNavigate();
+    const sourceContext = useContext(MyGlobalContext);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value); 
@@ -18,20 +21,18 @@ const InputComp = ({ mainPageObj, updateAllData }: getInputProps) => {
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate(`/result`);
+            sourceContext?.setMainPageObjProps({
+                inputQuery: input,
+                source:[],
+                catagory:sourceContext.mainPageObjProps.catagory,
+            });
+            navigate(`/moviecard`);
             setShouldNavigate(false);
         }
-    }, [
-        shouldNavigate,
-        input,
-        mainPageObj.catagory,
-        mainPageObj.source,
-        navigate,
-    ]);
+    }, [shouldNavigate, input, mainPageObj.catagory, mainPageObj.source, navigate, sourceContext]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
         const updatedMainPageObj = { ...mainPageObj, inputQuery: input };
         updateAllData(updatedMainPageObj);
         setShouldNavigate(true);

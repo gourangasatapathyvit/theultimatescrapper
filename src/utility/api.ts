@@ -1,4 +1,4 @@
-import { mainPageObjProps } from "../components/mainPage/MainPage";
+import { mainPageObjProps } from "../../src/utility/AllProps";
 import axios, { AxiosResponse } from "axios";
 
 export default async function callPostApiWithStringBody<T>(
