@@ -13,7 +13,7 @@ const TmdbResp = () => {
     const [content, setContent] = useState<string>();
     const [combinedData, setCombinedData] = useState<combinedDataObj>();
     
-    const [searchTerm, setSearchTerm] = useState<string>(() => {
+    const [searchTerm] = useState<string>(() => {
         const storedSearchTerm = localStorage.getItem('mainPageObj');
         const storedObj =  storedSearchTerm? JSON.parse(storedSearchTerm):null;
         return storedObj?storedObj.inputQuery:source?.mainPageObjProps.inputQuery;
